@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install utils
 RUN \
   apt-get update && \
-  apt-get -y install wget curl apt-utils
+  apt-get -y install wget curl apt-utils ssmtp
 
 # Configure Dotdeb sources
 RUN \
@@ -22,7 +22,13 @@ RUN mkdir "/run/php"
 RUN sed -i -e "s/;daemonize = yes/daemonize = no/g" /etc/php/7.0/fpm/php-fpm.conf && \
     sed -i "s/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9001/g" /etc/php/7.0/fpm/pool.d/www.conf && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/"                  /etc/php/7.0/fpm/php.ini && \
-    sed -i "s/;date.timezone =.*/date.timezone = Europe\/Paris/"        /etc/php/7.0/fpm/php.ini 
+    sed -i "s/;date.timezone =.*/date.timezone = Europe\/Paris/"        /etc/php/7.0/fpm/php.ini && \
+    sed -i 's/root=.*/root="$SSMTP_ROOT_MAIL"/' /etc/ssmtp/ssmtp.conf && \    
+    sed -i 's/mailhub=.*/mailhub="$SSMTP_SMTP_HOST"/' /etc/ssmtp/ssmtp.conf && \
+    sed -i 's/#rewriteDomain=.*/rewriteDomain="$SSMTP_REWRITEDOMAIN"/' /etc/ssmtp/ssmtp.conf && \
+    sed -i 's/hostname=.*/hostname="$SSMTP_HOSTNAME"/' /etc/ssmtp/ssmtp.conf && \
+    sed -i 's/#FromLineOverride=.*/FromLineOverride=YES/' /etc/ssmtp/ssmtp.conf && \
+    sed -i '$ a root:"$SSMTP_ROOT_MAIL":"$SSMTP_SMTP_HOST"' /etc/ssmtp/revaliases
 
 EXPOSE 9001
 
