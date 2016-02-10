@@ -15,7 +15,7 @@ RUN \
   echo "\ndeb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.list && \
   apt-get update
 
-RUN apt-get install -y php7.0-fpm php7.0 php7.0-mysql php7.0-pgsql php7.0-imap php7.0-gd wkhtmltopdf
+RUN apt-get install -y php7.0-fpm php7.0 php7.0-mysql php7.0-pgsql php7.0-curl php7.0-bz2 php7.0-fileinfo php7.0-imap php7.0-gd wkhtmltopdf
 
 RUN mkdir "/run/php"
 
