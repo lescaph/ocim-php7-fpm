@@ -10,6 +10,9 @@ RUN \
   apt-get update && \
   apt-get -y install wget curl apt-utils ssmtp xz-utils libxrender-dev git && \
 
+# Configure git
+  git config --global url."https://".insteadOf git:// && \
+
 # Configure Dotdeb sources
   wget -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add - && \
   echo "deb http://packages.dotdeb.org jessie all" > /etc/apt/sources.list.d/dotdeb.list && \
