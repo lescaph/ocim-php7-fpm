@@ -8,7 +8,13 @@ WORKDIR /tmp
 # Install utils
 RUN \
   apt-get update && \
-  apt-get -y install wget curl apt-utils ssmtp xz-utils libxrender-dev git && \
+  apt-get -y install wget \
+                curl \
+                apt-utils \
+                ssmtp \
+                xz-utils \
+                libxrender-dev \
+                git && \
 
 # Configure git
   git config --global url."https://".insteadOf git:// && \
@@ -18,7 +24,19 @@ RUN \
   echo "deb http://packages.dotdeb.org jessie all" > /etc/apt/sources.list.d/dotdeb.list && \
   echo "\ndeb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.list && \
   apt-get update && \
-  apt-get install -y php7.0-fpm php7.0 php7.0-mysql php7.0-sqlite3 php7.0-pgsql php7.0-curl php7.0-mcrypt php7.0-intl php7.0-bz2 php7.0-imap php7.0-gd php7.0-json && \
+  apt-get install -y php7.0-fpm \
+                php7.0 \
+                php7.0-mysql \
+                php7.0-sqlite3 \
+                php7.0-pgsql \
+                php7.0-curl \
+                php7.0-mcrypt \
+                php7.0-intl \
+                php7.0-bz2 \
+                php7.0-imap \
+                php7.0-gd \
+                php7.0-json \
+                php7.0-dev && \
 
 # INSTALL NODEJS NPM BOWER GULP
     curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
@@ -42,7 +60,10 @@ RUN \
     sed -i -e "s/;daemonize = yes/daemonize = no/g" /etc/php/7.0/fpm/php-fpm.conf && \
     sed -i "s/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9001/g" /etc/php/7.0/fpm/pool.d/www.conf && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/"                  /etc/php/7.0/fpm/php.ini && \
-    sed -i "s/;date.timezone =.*/date.timezone = Europe\/Paris/"        /etc/php/7.0/fpm/php.ini
+    sed -i "s/;date.timezone =.*/date.timezone = Europe\/Paris/"        /etc/php/7.0/fpm/php.ini && \
+
+# INSTALL XDEBUG
+    yes | pecl install xdebug
 
 COPY docker-entrypoint.sh /
 
