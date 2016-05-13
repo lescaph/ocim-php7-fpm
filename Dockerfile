@@ -36,10 +36,11 @@ RUN \
                 php7.0-imap \
                 php7.0-gd \
                 php7.0-json \
-                php7.0-dev && \
+                php7.0-xdebug && \
+               # php7.0-dev && \
 
 # INSTALL NODEJS NPM BOWER GULP
-    curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
+    curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g npm && \
     npm install -g bower && \
@@ -60,10 +61,7 @@ RUN \
     sed -i -e "s/;daemonize = yes/daemonize = no/g" /etc/php/7.0/fpm/php-fpm.conf && \
     sed -i "s/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9001/g" /etc/php/7.0/fpm/pool.d/www.conf && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/"                  /etc/php/7.0/fpm/php.ini && \
-    sed -i "s/;date.timezone =.*/date.timezone = Europe\/Paris/"        /etc/php/7.0/fpm/php.ini && \
-
-# INSTALL XDEBUG
-    yes | pecl install xdebug
+    sed -i "s/;date.timezone =.*/date.timezone = Europe\/Paris/"        /etc/php/7.0/fpm/php.ini 
 
 COPY docker-entrypoint.sh /
 
