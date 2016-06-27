@@ -37,6 +37,7 @@ RUN \
                 php7.0-gd \
                 php7.0-json \
                 php7.0-xdebug && \
+                php7.0-ldap && \
                # php7.0-dev && \
 
 # INSTALL NODEJS NPM BOWER GULP
