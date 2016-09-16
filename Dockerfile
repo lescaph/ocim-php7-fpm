@@ -61,7 +61,7 @@ RUN \
     php -r "unlink('composer-setup.php');"  && \
 
 # CONFIGURE PHP
-    mkdir "/run/php" && \
+    #mkdir "/run/php" && \
     sed -i -e "s/;daemonize = yes/daemonize = no/g" /etc/php/7.0/fpm/php-fpm.conf && \
     sed -i "s/listen = \/run\/php\/php7.0-fpm.sock/listen = 0.0.0.0:9001/g" /etc/php/7.0/fpm/pool.d/www.conf && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/"                  /etc/php/7.0/fpm/php.ini && \
